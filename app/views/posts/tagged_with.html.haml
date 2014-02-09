@@ -1,0 +1,20 @@
+%h1
+	Listing All Posts with tag-
+	%strong #{params[:tag]}
+.row
+	.col-md-8
+		%ul.app-list
+			- @posts.each do |post|
+				%li
+					%h3= link_to post.title, post_path(post)
+					%p= AutoExcerpt.new(post.description, {words: 180,strip_html: true})
+					%div
+						%span.label.label-info By: #{post.user.email}
+						%span.label.label-default #{time_ago_in_words post.created_at} ago
+						%span.label.label-warning Price: Rs. #{post.price}
+						.pull-right
+							%span.label.label-success Status: #{post.nice_status}
+	.col-md-4.sidebar
+		%p
+			= link_to 'Add A New Post', new_post_path, class: "btn btn-primary"
+		= render_cell :sidebar, :show

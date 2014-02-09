@@ -1,0 +1,34 @@
+=form_tag search_path, method: :get, class: 'form-inline', id: 'search_form' do
+  .form-group
+    %label.sr-only{:for => "search_field"} Search
+    %input#search_field.form-control{:placeholder => "Find in chitwan", :type => "search", name: 'keywords'}/
+  %button.btn.btn-primary{:type => "submit"} Go
+%h3 Hot Deals
+.list-group
+  - @hotdeals.each do |post|
+    %a.list-group-item{href: "#{post_path(post)}"}
+      = image_tag post.photo_url(:thumb), align: "left" unless post.photo.blank?
+      %h4.list-group-item-heading
+        = post.title
+      %p  
+        %b Price:
+        #{post.price}
+- unless @ads.empty?
+  #buzzes_sidetop
+    - @ads.first.each do |ads|
+      %a{href: ads.link, target: "_blank"}=image_tag ads.picture_url(:thumb)
+%h3 Tag Cloud
+#tag_cloud.well
+  - tag_cloud Post.tag_counts, %w[s m l] do |tag, css|
+    = link_to tag.name, tag_path(tag.name), class: css
+%h3 Popular in HamroChitwan
+.list-group
+  - @popular.each do |post|
+    %a.list-group-item{href: "#{post_path(post)}"}
+      = image_tag post.photo_url(:thumb), align: "left" unless post.photo.blank?
+      %h4.list-group-item-heading
+        = post.title
+      %p
+        %b Price:
+        #{post.price}
+%iframe{allowtransparency: "true", frameborder: "0", scrolling: "no", src: "//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fhamrochitwansite&width&height=258&colorscheme=light&show_faces=true&header=false&stream=false&show_border=false", style: "border:none; overflow:hidden; height:258px;"}

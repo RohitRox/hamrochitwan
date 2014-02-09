@@ -1,0 +1,21 @@
+%h1 Buzz:  #{@buzz.title}
+%hr
+.row
+  .col-md-4
+    %p.thumbnail
+      = image_tag @buzz.picture_url
+  .col-md-8
+    %p
+      %b Status:
+      = @buzz.nice_status
+    %p
+      %b Expiry date:
+      = @buzz.expiry_date.strftime('%d %B, %Y')
+    %p
+      %b Position:
+      = @buzz.nice_position
+
+
+= link_to 'Edit', edit_buzz_path(@buzz)
+\|
+= link_to 'Back', buzzs_path

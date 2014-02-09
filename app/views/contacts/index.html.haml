@@ -1,0 +1,24 @@
+%h1 Listing All Messages
+%hr
+%table.table.table-bordered
+  %tr
+    %th Full Name
+    %th Email
+    %th Message
+    %th Message type
+    %th
+    %th
+
+  - @contacts.each do |contact|
+    %tr
+      %td= contact.full_name
+      %td= contact.email
+      %td
+        %p
+          = truncate contact.message, length: 80
+      %td= contact.message_type
+      %td= link_to 'Show', contact
+      %td= link_to 'Destroy', contact, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+= paginate @contacts

@@ -1,0 +1,15 @@
+%h1= "We have #{@results.size} results(s) for you."
+.row
+	.col-md-12#search_form_wrap
+		=form_tag search_path, method: :get, class: 'form-inline', id: 'search_form' do
+			.form-group
+				%label.sr-only{:for => "search_field"} Search
+				%input.form-control{:placeholder => "Find in chitwan", :type => "search", name: 'keywords', value: params[:keywords], size: 100}
+			%button.btn.btn-primary{:type => "submit"} Go
+%ul.app-list
+	- @results.each do |res|
+		%li
+			%h3
+				%span.label.label-info= "In #{res.class == Post ? 'KinBech' : 'Business'}"
+				= link_to res.title, res.get_path
+			%p.dim= AutoExcerpt.new(res.description, {words: 40,strip_html: true})

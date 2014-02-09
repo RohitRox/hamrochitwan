@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <%= stylesheet_link_tag  "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <meta name="keywords" content="chitwan, buy and sale, business, business directory, search in chitwan, fin in chitwan" />
+  <meta name="description" content="Buy and sell everything new or second hand or used in chitwan, find everything in chitwan including business pages, shops, hotels, schools and colleges. advertise your products and business, promote your business, increase online presence" />
+  <%= yield :head %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= render '/shared/nav' %>
+
+<div class="container main">
+  <%= yield %>
+  <footer>
+    <hr/>
+    <p class="pull-left">
+      &copy; Hamrochitwan 2013
+    </p>
+    <div class="pull-right">
+      <%= link_to "About Us", about_path  %>
+      <%= link_to "Contact", new_contact_path %>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

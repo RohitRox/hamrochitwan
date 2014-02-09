@@ -1,0 +1,117 @@
+<%= form_for @post, :html => {:multipart => true} do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+
+      <div class="col-md-6">
+        <div class="field">
+          <%= f.label :title %><br />
+          <%= f.text_field :title, class: "full-width", required: true%>
+        </div>
+        <br>
+        <div class="field">
+          <%= f.label :description %><br />
+          <%= f.text_area :description, rows: 10, class: "full-width redactor", required: true %>
+        </div>
+        <br>
+        <div class="field">
+          <label>Add a picture</label>
+          <br>
+          <%= image_tag @post.photo_url(:thumb) unless @post.photo.blank? %>
+          <%= f.file_field :photo, value: @post.photo_url(:thumb) %>
+          <%= f.hidden_field :photo_cache %>
+        </div>
+        <br>
+        <div class="field">
+          <label>Add Tags</label>
+          <%= f.hidden_field :tag_list %>
+          <br>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="field">
+          <%= f.label :used_for %><br />
+          <%= f.text_field :used_for, placeholder: "In months" %>
+        </div>
+        <br>
+        <div class="field">
+          <%= f.label :condition %><br />
+          <%= f.select :condition, Post::CONDITIONS %>
+        </div>
+        <br>
+        <div class="field">
+          <%= f.label :expiry_date %><br />
+          <%= f.text_field :expiry_date, placeholder: "30 days from now if not set" %>
+        </div>
+        <% unless @pages.empty? %>
+        <br>
+        <div class="field">
+          <%= f.label "Page" %><br />
+          <% @pages.prepend(OpenStruct.new(id: "", title: "None")) %>
+          <%= f.select :page_id, options_from_collection_for_select(@pages, "id", "title", @post.page_id) %>
+          <br>
+          <small>We found that you have pages also. You can link this post to your pages. The linked items will appear in the page also.</small>
+        </div>
+        <% end %>
+      </div>
+      <div class="col-md-3">
+        <div class="field">
+          <%= f.label :price %><br />
+          <%= f.text_field :price, placeholder: "In Rupees", required: true %>
+        </div>
+        <br>
+        <div class="field">
+          <%= f.check_box :home_delivery %>
+          <%= f.label :home_delivery %>
+        </div>
+        <div class="field" >
+          <%= f.check_box :hotdeal %>
+          <%= f.label :hotdeal %>
+          <br>
+          <small>Hot Deals should be approved by admin before it gets featured. Deals will be approved within 5 days. A picture is compulary for a post to become HotDeal.</small>
+        </div>       
+      </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+        <div class="actions">
+          <%= f.submit class: "btn btn-primary" %>
+          <%= link_to 'Cancel', posts_path %>
+        </div>
+      </div>
+  </div>
+<% end %>
+<script type="text/javascript">
+  $(function(){
+    var date = new Date();
+    var datestring = ("0" +date.getDate().toString()).substr(-2)  + "-" + ("0" + (date.getMonth() + 1).toString()).substr(-2)+ "-" + (date.getFullYear().toString());
+    $('#post_expiry_date').datepicker({
+      format: 'dd-mm-yyyy',
+      todayBtn: 'linked',
+      startDate: datestring
+    });
+
+    $('#post_tag_list').tagit({
+        tagSource: function(search, showChoices) {
+          var that = this;
+          $.ajax({
+            url: "/tags",
+            data: {q: search.term},
+            success: function(choices) {
+              showChoices(that._subtractArray(choices, that.assignedTags()));
+            }
+          });
+        },
+    });
+  });
+</script>

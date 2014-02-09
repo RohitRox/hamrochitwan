@@ -1,0 +1,154 @@
+<% content_for :head do %>
+<%= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false" %>
+<%= javascript_include_tag "/javascripts/jquery.ui.addresspicker.js" %>
+<% end %>
+<%= form_for @page, :html => {:multipart => true} do |f| %>
+  <% if @page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
+      <ul>
+      <% @page.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="field">
+        <%= f.label :title %><br />
+        <%= f.text_field :title, required: true %>
+      </div>
+      <br>
+      <div class="field">
+        <%= f.label :description %><br />
+        <%= f.text_area :description, class: "redactor", required: true %>
+      </div>
+      <br>
+      <div class="field field-with-img">
+        <b>Choose theme</b><br />
+        <% Page::THEMES.each do |page_theme| %>
+          <label>
+            <%=image_tag "page_theme_#{page_theme}.png" %><br>
+            <%= f.radio_button :theme, page_theme %>
+            <%=page_theme.capitalize%>
+          </label>
+        <% end %>
+      </div>
+      <br>
+      <div class="field">
+        <%= f.label :picture %><br />
+        <%= image_tag @page.picture_url(:thumb) unless @page.picture.blank? %>
+        <%= f.file_field :picture, value: @page.picture_url(:thumb) %>
+        <%= f.hidden_field :picture_cache %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="field">
+        <%= f.label :status %><br />
+        <%= f.select :status, Page::STATUSES.map{|status| [ status[1], status[0] ]} %>
+      </div>
+      <br>
+      <div class="field">
+        <%= f.label :business %><br />
+        <%= f.select :business_id, options_from_collection_for_select(@business, "id", "title") %>
+      </div>
+      <br>
+      <div class="field">
+        <%= f.label :contact_details %><br />
+        <%= f.text_area :contact_details, rows: 4 %>
+      </div>
+      <div class="field">
+        <%=f.hidden_field :map_info %>
+        <%=f.hidden_field :map_address %>
+        <input id="addresspicker_map" type="hidden" />   <br/>
+        <!--
+        <label>Lat:      </label> <input id="lat" disabled=disabled> <br/>
+        <label>Lng:      </label> <input id="lng" disabled=disabled> <br/> -->
+        <div class='map-wrapper'>
+          <div id="legend">You can use map below for specifiying location for contact. You can drag and drop the marker to the correct location</div>
+          <div id="map"></div>
+        </div>
+        <div id="callback_result"></div>
+      </div>
+      <br>
+      <div class="field">
+        <%=f.check_box :background %>
+        <%=f.label "Do you want to decorate your page with a background?" %>
+      </div>
+      <div id="bg_details_wrap">
+      <div class="field">
+        <%= f.label "Choose your background image(preferably more than 800X600)" %><br />
+        <%= image_tag @page.background_image_url(:thumb) unless @page.background_image.blank? %>
+        <%= f.file_field :background_image, value: @page.background_image_url(:thumb) %>
+        <%= f.hidden_field :background_image_cache %><br>
+        <i>If you don't set your background image, a default background will be used.</i>
+      </div>
+      <div class="field">
+        <%= f.label "Background Style" %><br />
+        <%= f.select :bg_details, Page::BG_DETAILS.map{|k| [ k[0], k[1] ]} %>
+      </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="actions">
+        <%= f.submit class: "btn btn-primary" %>
+        <%= link_to 'Cancel', pages_path %>
+      </div>
+    </div>
+  </form>
+<% end %>
+<script type="text/javascript">
+  $(function(){
+    if ($('#page_background').is(':checked')){
+      $('#bg_details_wrap').show();
+    }else{
+      $('#bg_details_wrap').hide();
+    }
+    $('#page_background').on('click', function(){
+      if($(this).is(':checked')){
+        $('#bg_details_wrap').slideDown();
+      }else{
+        $('#bg_details_wrap').slideUp();
+      }
+    });
+  });
+  $(function() {
+    var addresspickerMap = $( "#addresspicker_map" ).addresspicker({
+      regionBias: "fr",
+      updateCallback: showCallback,
+      mapOptions: {
+        zoom: 14,
+        center: new google.maps.LatLng(27.6988907, 84.43039590000001),
+        scrollwheel: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      },
+      elements: {
+        map:      "#map",
+        //lat:      "#lat",
+        //lng:      "#lng"
+      }
+    });
+
+    var gmarker = addresspickerMap.addresspicker( "marker");
+    gmarker.setVisible(true);
+    addresspickerMap.addresspicker( "updatePosition");
+
+    $("#addresspicker_map").addresspicker("option", "reverseGeocode", true);
+
+    function showCallback(geocodeResult, parsedGeocodeResult){
+      $('#page_map_info').val("("+parsedGeocodeResult.lat+","+parsedGeocodeResult.lng+")");
+      $('#page_map_address').val(parsedGeocodeResult.route+parsedGeocodeResult.locality);
+      // $('#callback_result').text(JSON.stringify(parsedGeocodeResult, null, 4));
+    }
+    // Update zoom field
+    var map = $("#addresspicker_map").addresspicker("map");
+    google.maps.event.addListener(map, 'idle', function(){
+      $('#zoom').val(map.getZoom());
+    });
+
+  });
+</script>

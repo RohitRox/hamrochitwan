@@ -1,0 +1,23 @@
+%h1 Editing Profile
+%hr
+=form_for @user, :html => {:multipart => true} do |f|
+	%p
+		%label
+			Full Name:
+			=f.text_field :full_name
+	%p
+		%label
+			Address:
+			=f.text_field :address
+	%p
+		%label
+			Phone Number:
+			=f.text_field :phone
+	%p
+		%label
+			Avatar:
+			=f.file_field :avatar
+			=f.hidden_field :avatar_cache
+	%p
+		=f.submit "Save", class: "btn btn-primary"
+		=link_to "Cancel", :back

@@ -1,0 +1,54 @@
+- content_for :before_container do
+  .jumbotron
+    .container
+      =image_tag "/images/hamrochitwan-logo.png", align: "left"
+      %a{ href: "http://www.accuweather.com/en/np/bharatpur/244555/weather-forecast/244555", class: "aw-widget-legal"}
+      .aw-widget-current{ id: "awcc1390048864486", "data-locationkey"=>"244555", "data-unit"=>"c", "data-language"=>"en-us", "data-useip"=>"false","data-uid"=>"awcc1390048864486"}
+      %script{type: "text/javascript", src: "http://oap.accuweather.com/launch.js"}
+.row.home
+  .col-lg-8
+    #carousel-feature.carousel.slide
+      %ol.carousel-indicators
+        - @featured.size.times do |i|
+          %li{"data-target"=>"#carousel-feature","data-slide-to"=>"#{i}",class: ("active" if i == 0)}
+      .carousel-inner
+        - @featured.each_with_index do |feat, i|
+          .item{class: ('active' if i == 0)}
+            %img{:alt => "", :src => feat.picture_url}
+            .carousel-caption
+              =link_to feat.title, get_path(feat)
+      %a.left.carousel-control{"data-slide" => "prev", :href => "#carousel-feature"}
+        %span.icon-prev
+      %a.right.carousel-control{"data-slide" => "next", :href => "#carousel-feature"}
+        %span.icon-next
+
+    %h2 Latest in HamroChitwan
+
+    .row.pinned_cols
+      - @latest_posts.each do |post|
+        .col-sm-6.col-md-6
+          .thumbnail
+            = link_to post do
+              = image_tag post.photo_url(:thumb), alt: post.title
+            .caption
+              %h3= link_to post.title.capitalize, post
+              %p= AutoExcerpt.new(post.description, {words: 35,strip_html: true})
+    %h2 Who's New
+
+    .row.pinned_cols
+      - @pages.each do |page|
+        .col-sm-6.col-md-6
+          .thumbnail.no-desc
+            = link_to page do
+              = image_tag page.picture_url, alt: page.title
+            .caption
+              %h3= link_to page.title.capitalize, page
+    %p= link_to "View All Pages", pages_path, class: "btn btn-primary"
+  .col-lg-4.sidebar
+    .social-feed
+      %a{href: "#",class: "btn btn-primary"}
+        %i.icon-facebook-sign
+        Find us in Facebook
+    %br
+    = render_cell :sidebar, :show
+/ /container

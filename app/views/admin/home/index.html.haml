@@ -1,0 +1,17 @@
+%h1 Feature Request List
+%table.table
+	%thead
+		%th Requests to review
+		%th Created At
+		%th Action
+	%tbody
+		- @features.each do |feat|
+			%tr{id: "feature_request_id_#{feat.id}" }
+				%td= feat.title
+				%td= "#{time_ago_in_words feat.created_at} ago"
+				%td
+					= link_to "View", post_path(feat), target: "_blank"
+					|
+					= link_to "Feature", feature_process_admin_feature_path(feat, process: "enable"), remote: true, method: :put, id: "feature_id_#{feat.id}"
+					|
+					= link_to "Ignore", feature_process_admin_feature_path(feat, process: "disable"), remote: true, method: :put, id: "feature_id_#{feat.id}"

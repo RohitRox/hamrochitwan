@@ -1,0 +1,26 @@
+%h1
+  Gallery:
+  %small #{@page.title}
+- if can? :edit, @page
+  = nested_form_for @page, html: {:multipart => true, id: "page_photos_form"} do |f|
+    .clearfix
+      = f.fields_for :attachments do |attachment_form|
+        - if image_tag attachment_form.object.file.present?
+          = image_tag attachment_form.object.file_url(:thumb), class: "rem-el"
+        .dib
+          %p
+            = attachment_form.label :file
+            %br/
+            = attachment_form.file_field :file, accept: "image/*", class: "gallery-upload-preview"
+          %p
+            = attachment_form.label "Say something about the photo"
+            %br/
+            = attachment_form.text_field :description
+          = attachment_form.link_to_remove "Remove this photo", class: "btn btn-xs btn-danger"
+    %br
+    = f.link_to_add "Add more photo", :attachments, class: "btn btn-sm btn-success"
+    %br
+    %br
+    %p
+      = f.submit "Save", class: "btn btn-sm btn-primary"
+      = link_to "Cancel", page_path(@page)

@@ -1,0 +1,16 @@
+.row
+	.col-sm-12.col-md-12
+		%h1
+			Business Category:
+			= @business.title
+		%p= "#{@total_pages} Pages(s) Total"
+		%ul.app-list
+			- @pages.each do |page|
+				%li
+					%h3
+						= link_to page.title, page.get_path
+					%p.dim= AutoExcerpt.new(page.description, {words: 140,strip_html: true})
+		= paginate @pages
+		- if can? :manage, Business
+			= link_to 'Edit', edit_business_path(@business), class: "btn btn-primary"
+			= link_to 'Back', businesses_path, class: "btn btn-primary"

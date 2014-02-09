@@ -1,0 +1,23 @@
+- title "Business Directory"
+%h1 Business Directory
+%hr
+%table.table.table-bordered
+  %tr
+    %th #
+    %th Title
+
+  - @businesses.select{ |b| b.parent_id == nil }.each do |business|
+    %tr.active
+      %td
+        = business.id
+      %td
+        = link_to business.title, business_path(business)
+    - @businesses.select{ |b| b.parent_id == business.id }.each do |business|
+      %tr
+        %td
+          = business.id
+        %td
+          = raw "&nbsp;&nbsp;&nbsp;&nbsp;#{link_to business.title, business_path(business)}"
+%br
+- if can? :create, Business
+  = link_to 'Add New to Directory', new_business_path, class: 'btn btn-primary'

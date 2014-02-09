@@ -1,0 +1,87 @@
+- title "#{@post.title}"
+.row
+  .col-sm-12.col-md-12
+    %h1
+      = @post.title.capitalize
+    %b.pull-left{style: "margin-top: 2px"}
+      = link_to  "By: #{@post.user.full_name || @post.user.email}", user_path(@post.user)
+    &nbsp;
+    %span.label.label-info
+      = "#{time_ago_in_words @post.created_at} ago"
+    - if @post.hotdeal && @post.nice_hotdeal_status == "active"
+      &nbsp;
+      %span.label.label-warning HotDeal
+%br
+.row
+  .col-md-3
+    = link_to @post.photo_url, class: "fancybox", title: @post.title do
+      = image_tag @post.photo_url, class: "img-thumbnail"
+    %div.tags-div
+      %strong Tags:
+      = raw @post.tag_list.map{ |t| link_to(t, tag_path(t)) }.join(', ')
+  .col-md-9
+    .row
+      .col-md-8
+        .share-wrap
+          / AddThis Button BEGIN
+          .addthis_toolbox.addthis_default_style
+            %a.addthis_button_facebook_like{"fb:like:layout" => "button_count"}
+            %a.addthis_button_tweet
+          :javascript
+            var addthis_config = {"data_track_addressbar":true};
+          %script{src: "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52e276631daabd07", type: "text/javascript"}
+          / AddThis Button END
+        %section.user_content
+          = simple_format @post.description
+      .col-md-4
+        .posts-info-note
+          %p
+            %b Status:
+            = @post.nice_status
+          %p
+            %b Price:
+            = @post.price
+          %p
+            %b Home Delivery:
+            = @post.home_delivery ? "Yes" : "No"
+          %p
+            %b Expiry Date:
+            = @post.expiry_date.strftime('%d %B, %Y')
+          %p
+            %b Condition:
+            = @post.condition
+          %p
+            %b Used For:
+            = @post.used_for
+            months
+
+%hr
+.comments_wrap
+  - @comments.each do |comment|
+    %p
+      - user = comment.user
+      = image_tag user.avatar_url(:thumb), height: '40px', width: "40px"
+      %b="#{user.full_name || user.email}:"
+      = comment.content
+%h2
+  Add a New Comment
+  - unless user_signed_in?
+    %small You need to sign up for this action.
+= form_for [@post, Comment.new] do |form|
+  %p
+    = form.text_area :content, :rows => 5, required: true
+  %p
+    = submit_tag "Add comment", class: "btn btn-primary", disabled: !user_signed_in?
+%hr
+-if can? :update, @post
+  = link_to 'Edit', edit_post_path(@post), class: "btn btn-primary"
+  - if @post.hotdeal && @post.hotdeal_status == Post::HOTDEAL_PENDING
+    = link_to "Approval Pending for HotDeal", "", disabled: true, class: "btn btn-default"
+  - else
+    = link_to (@post.hotdeal ? 'Remove Hotdeal' : 'Make HotDeal'), feature_post_path(@post,{feature_action: (@post.hotdeal ? 'unfeature' : 'feature')}), class: "btn btn-warning", method: :put
+-if can? :destroy, @post
+  = link_to 'Destroy', @post, class: "button btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' }
+
+
+
+

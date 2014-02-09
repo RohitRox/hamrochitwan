@@ -1,0 +1,27 @@
+- title 'All Pages'
+%h1 Listing All Pages
+%hr
+.row
+  .col-md-8
+    %br
+    %ul.nav.nav-pills
+      %li{class: ("active" unless params[:filter] || params[:filter] == "all_pages" )}
+        =link_to "All Pages", "?filter=all_pages"
+      - if user_signed_in?
+        %li{class: ("active" if params[:filter] == "my_pages")}
+          =link_to "My Pages", "?filter=my_pages"
+    %hr
+
+    %table.datatable.table#pages_datatable
+      %thead
+        %tr
+          %th
+          %th
+          %th
+      %tbody
+
+  .col-md-4.sidebar
+    %p
+      = link_to 'Add Your Page', new_page_path, class: "btn btn-primary"
+    = render_cell :sidebar, :show
+    

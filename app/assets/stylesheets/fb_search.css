@@ -1,0 +1,63 @@
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.clearfix:after {
+  clear: both;
+}
+img{
+  vertical-align: baseline;
+}
+#facebook-posts{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#facebook-posts li{
+  background: #fff;
+  padding: 8px;
+  box-shadow: 0px 0px 2px #888;
+}
+.author{
+  font-weight: bold;
+}
+.story{
+  margin-left: 72px;
+}
+.source {
+  float: left;
+  margin-right: 8px;
+}
+.meta{
+  background: #ddd;
+  margin-top: 10px;
+  display: table;
+  padding: 0px 8px;
+  font-size: 10px;
+}
+.video-thumb{
+  text-decoration: none;
+}
+.caption{
+  color: #666;
+}
+.photo-post img{
+  width: 240px;
+}
+.link{
+  display: inline-block;
+}
+.media-caption{
+  white-space: normal;
+  display: inline-block;
+  vertical-align: top;
+}
+.message{
+  white-space: pre-wrap;
+  color: #666;
+}

@@ -1,0 +1,18 @@
+%h1 Notifications
+%hr
+%table.table.table-bordered
+  %tr
+    %th Event
+    %th Details
+    %th
+
+  - @notifications.each do |notification|
+    %tr
+      %td= notification.name
+      %td= simple_format notification.content
+      %td
+        - if notification.active
+          =form_for notification do |f|
+            =f.hidden_field :active, value: 0
+            = f.submit 'Mark As Read', class: "btn btn-xs btn-success"
+        = link_to 'Delete', notification, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-xs btn-danger pull-left"

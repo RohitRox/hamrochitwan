@@ -1,0 +1,32 @@
+%h1 Listing All Buzzs
+%hr
+%table.table.table-bordered
+  %thead
+    %tr
+      %th Info
+      %th Picture
+      %th Status
+      %th Expiry date
+      %th Position
+      %th
+      %th
+      %th
+  %tbody
+    - @buzzs.each do |buzz|
+      %tr
+        %td
+          = buzz.title
+          %br
+          %b Link
+          = buzz.link
+        %td= image_tag buzz.picture_url(:thumb), width: "50%"
+        %td= buzz.nice_status
+        %td= buzz.expiry_date.strftime('%d %B, %Y')
+        %td= buzz.nice_position
+        %td= link_to 'Show', buzz
+        %td= link_to 'Edit', edit_buzz_path(buzz)
+        %td= link_to 'Destroy', buzz, :method => :delete, :data => { :confirm => 'Are you sure?' }
+= paginate @buzzs
+%br
+
+= link_to 'Create A New Buzz', new_buzz_path, class: "btn btn-primary"

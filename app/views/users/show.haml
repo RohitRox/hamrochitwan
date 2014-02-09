@@ -1,0 +1,21 @@
+%h1 #{@user.full_name.try(:capitalize) || @user.email.capitalize}
+.row
+	.col-md-4
+		=image_tag @user.avatar_url, class: "img-thumbnail", align: "left"
+	.col-md-8
+		%p
+			%div
+				%b Fullname:
+				= @user.full_name
+			%br
+			%div
+				%b Phone:
+				= @user.phone
+			%br
+			%div
+				%b Address:
+				= @user.address
+			- if can? :edit, @user
+				%br
+				%div
+					=link_to "Edit Info", edit_user_path(@user), class: "btn btn-primary btn-sm"

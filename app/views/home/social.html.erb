@@ -1,0 +1,146 @@
+<h1>Chitwan Social Feed</h1>
+<hr />
+<style type="text/css">
+  .tab-content{
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    margin-top: -1px;
+    line-height: 1.5em;
+  }
+</style>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#facebook" data-toggle="tab"><i class="icon icon-facebook"></i> Facebook</a></li>
+  <li><a href="#youtube" data-toggle="tab"><i class="icon icon-youtube"></i> Youtube</a></li>
+  <li><a href="#news" data-toggle="tab"><i class="icon icon-th"></i> News</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="facebook">
+    <ul id="facebook-posts">
+
+      <!-- ko foreach:posts -->
+      <li class="post">
+
+        <div class="source">
+          <a class="profile-picture" data-bind="attr: {'href': 'http://www.facebook.com/profile.php?id='+from.id, 'title': from.name}" target="_blank">
+              <img data-bind="attr: {'src': 'http://graph.facebook.com/'+from.id+'/picture?height=64&width=64', 'alt': from.name}">
+          </a>
+        </div>
+        <div class="story">
+          <a data-bind="attr: {'href': 'http://www.facebook.com/profile.php?id='+from.id, 'title': from.description}, text: from.name" target="_blank" class="author">
+          </a>
+          <br>
+          <!-- ko if:type=='status' -->
+          <div class="message" data-bind="truncate: message, parse_tags: message_tags"></div>
+          <!-- /ko -->
+
+          <!-- ko if:typeof story!='undefined' -->
+          <div data-bind="truncate: story" class="message"></div>
+          <!-- /ko -->
+          
+          <!-- ko if:type=='video' -->
+            <div class="video-post clearfix">
+                <div class="link">
+                <a href="javascript:void(0)" data-bind="click: play_video" title="Click to play video"  class="video-thumb">
+                  <!-- ko if:typeof picture!='undefined' -->
+                    <img data-bind="attr: {'src': picture}">
+                  <!-- /ko -->
+                </a>
+                </div>
+                <div class="media-caption">
+                <!-- ko if:typeof link!='undefined' -->
+                  <a data-bind="attr: {'href': link}" target="_blank">
+                    <span data-bind="truncate: message, parse_tags: message_tags"></span>
+                    <!-- ko if:typeof properties!='undefined' -->
+                      (<span data-bind="text: properties[0].text"></span>)
+                    <!-- /ko -->
+                  </a>
+                <!-- /ko -->
+                </div>
+            </div>
+          <!-- /ko -->
+
+          <!-- ko if:type=='photo' -->
+            <div class="photo-post clearfix">
+            <!-- ko if:typeof message!='undefined' -->
+            <div class="message" data-bind="truncate: message, parse_tags: message_tags"></div>
+            <!-- /ko -->
+            <div class="link">
+            <a data-bind="attr: {'href': link}" target="_blank" title="Click to view photo on Facebook">
+                <img data-bind="attr: {'src': 'http://graph.facebook.com/'+ object_id+'/picture?width=64&height=64'}" align="left">
+            </a>
+            </div>
+            <!-- ko if:typeof caption!='undefined' -->
+              <div class="media-caption message" data-bind="truncate: caption"></div>
+            <!-- /ko -->
+            </div>
+          <!-- /ko -->
+
+          <!-- ko if:type=='link' -->
+            <div class="link-post clearfix">
+            <!-- ko if:typeof message!='undefined' -->
+            <div data-bind="truncate: message" class="message"></div>
+            <!-- /ko -->
+
+            <div class="link">
+              <!-- ko if:typeof picture!='undefined' -->
+              <a data-bind="attr: {'href': link}" class="link-img">
+                  <img data-bind="attr: {'src': picture, 'alt': name}">
+              </a>
+              <!-- /ko -->
+            </div>
+            <div class="media-caption">
+                <!-- ko if:typeof name!='undefined' -->
+                <a data-bind="attr: {'href': link}, text: name"></a>
+                <!-- /ko -->
+                <!-- ko if:name=='' -->
+                <a data-bind="attr: {'href': link}, text: message"></a>
+                <!-- /ko -->
+                <!-- ko if:typeof caption!='undefined' -->
+                <div class="caption" data-bind="text: caption"></div>
+                <!-- /ko -->
+                <!-- ko if:typeof description!='undefined' -->
+                <div class="description" data-bind="truncate: description"></div>
+                <!-- /ko -->
+              </div>
+            </div>
+          <!-- /ko -->
+
+          <div class="meta">
+
+            <!-- ko if:typeof likes!='undefined' -->
+            <span data-bind="text: likes.data.length"></span> <span data-bind="pluralize: likes.data.length">like</span> | 
+            <!-- /ko -->
+
+            <!-- ko if:typeof shares!='undefined' -->
+            <span data-bind="text: shares.count"></span> <span data-bind="pluralize: shares.count">share</span> | 
+            <!-- /ko -->
+
+            <span class="time" data-bind="text: get_relative_time(fb_format_time(created_time))"></span>
+
+            <!-- ko if:typeof place!='undefined' -->
+            from <span class="place" data-bind="text: place.name"></span>
+            <!-- /ko -->
+
+            <!-- ko if:typeof application!='undefined' -->
+            via <span class="app" data-bind="text: application.name"></span>
+            <!-- /ko -->
+          </div>
+
+        </di>
+
+      </li>
+      <!-- /ko -->
+
+    </ul>
+  </div>
+  <div class="tab-pane" id="youtube">
+    <h2>Youtube Feed Coming Soon ...</h2>
+  </div>
+  <div class="tab-pane" id="news">
+    <h2>News Feed Coming Soon ...</h2>
+  </div>
+</div>

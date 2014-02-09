@@ -1,0 +1,13 @@
+%h1 Message from #{@contact.email}
+%hr
+%p
+	%b Date: 
+	#{time_ago_in_words(@contact.created_at)} ago
+%p
+	%b Message type:
+	= @contact.message_type
+%p
+	%b Message:
+	%br
+	.well
+		= @contact.message

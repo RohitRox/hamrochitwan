@@ -1,0 +1,28 @@
+- title 'All Posts'
+%h1 Listing All Posts
+%hr
+.row
+  .col-md-8
+    %br
+    %ul.nav.nav-pills
+      %li{class: ("active" unless params[:filter] || params[:filter] == "all_posts" )}
+        =link_to "All Posts", "?filter=all_posts"
+      - if user_signed_in?
+        %li{class: ("active" if params[:filter] == "my_posts")}
+          =link_to "My Posts", "?filter=my_posts"
+    %hr
+
+    %table.datatable.table#posts_datatable
+      %thead
+        %tr
+          %th
+          %th
+          %th
+          %th
+      %tbody
+
+
+  .col-md-4.sidebar
+    %p
+      = link_to 'Add A New Post', new_post_path, class: "btn btn-primary"
+    = render_cell :sidebar, :show
