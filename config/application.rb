@@ -15,8 +15,6 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-APP_CONFIG = YAML.load_file(File.expand_path("app_config.yml", File.dirname(__FILE__)))[Rails.env].with_indifferent_access
-
 module Hamrochitwan
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
