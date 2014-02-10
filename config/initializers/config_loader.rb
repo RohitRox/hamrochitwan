@@ -1,7 +1,7 @@
 if Rails.env.production?
     APP_CONFIG = {
       site_name: "HamroChitwan",
-      cl_cloud_name: ENV['CL_CLOUDNAME'],
+      cl_cloudname: ENV['CL_CLOUDNAME'],
       cl_apikey: ENV['CL_APIKEY'],
       cl_apisecret: ENV['CL_APISECRET']
     }
