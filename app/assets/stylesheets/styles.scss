@@ -28,7 +28,7 @@ body{
   }
 }
 .navbar-brand{
-	padding: 9px 15px;
+	padding: 9px 15px 6px 15px;
 }
 .carousel-inner>.item>img, .carousel-inner>.item>a>img{
 	width: 100%;
@@ -208,6 +208,9 @@ div.aw-widget-current-inner{
 }
 .navbar-nav > li > .navbar-avatar{
 	padding: 4px;
+	img{
+		vertical-align: middle;
+	}
 }
 .navbar-avatar-thumb{
 	height: 40px;
