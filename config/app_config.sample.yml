@@ -1,6 +1,6 @@
 defaults: &defaults
   site_name: "HamroChitwan"
-  cl_cloud_name: ""
+  cl_cloudname: ""
   cl_apikey: ""
   cl_apisecret: ""
 

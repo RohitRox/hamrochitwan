@@ -8,7 +8,7 @@ module ApplicationHelper
     if title.present?
       content_for :title, title
     else
-      content_for?(:title) ? APP_CONFIG['site_name'] + ' | ' + content_for(:title) : APP_CONFIG['site_name']
+      content_for?(:title) ? APP_CONFIG[:site_name] + ' | ' + content_for(:title) : APP_CONFIG[:site_name]
     end
   end
 

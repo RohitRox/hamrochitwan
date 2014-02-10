@@ -14,7 +14,7 @@ gem 'kaminari'
 gem 'carrierwave'
 gem 'cloudinary'
 gem "rmagick"
-gem 'rails_admin'
+# gem 'rails_admin'
 gem 'cells'
 gem 'haml-rails'
 gem 'friendly_id'

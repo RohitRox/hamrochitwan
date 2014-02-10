@@ -44,7 +44,7 @@ class PagesController < ApplicationController
   # POST /pages
   # POST /pages.json
   def create
-    @page = current_user.pages.new(params[:page])
+    params[:page][:map_info] = nil unless params[:page][:map_info].present?
     respond_to do |format|
       if @page.save
         format.html { redirect_to @page, notice: 'Page was successfully created.' }
