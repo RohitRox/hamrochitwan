@@ -94,8 +94,8 @@ class PagesController < ApplicationController
   end
 
   def gallery
-    redirect_to @page and return unless can? :edit, @page
     @page = Page.find(params[:page_id])
+    redirect_to @page and return unless can? :update, @page
   end
 
 end

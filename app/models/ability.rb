@@ -27,8 +27,8 @@ class Ability
       can :feature, Page do |page|
         user.admin?
       end
-      can :update, User do |usr|
-        usr == user
+      can :gallery, Page do |page|
+        page.try(:user) == user
       end
     else
       can :read, :all
