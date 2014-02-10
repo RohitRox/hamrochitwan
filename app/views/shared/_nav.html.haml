@@ -39,7 +39,7 @@
               - if notifications_count > 0
                 %span.label.label-danger
                   = notifications_count
-        %li{class: ("active" if controller_name=="notifications")}
+        %li{class: ("active" if controller_name=="home" && action_name=="social")}
           =link_to 'Social', social_path
       %ul.nav.navbar-nav.pull-right
         - if user_signed_in?

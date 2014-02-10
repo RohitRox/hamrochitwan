@@ -4,7 +4,7 @@ class HomeController < ApplicationController
 	layout 'social', :only => [:social]
 
 	def index
-		@latest_posts = Post.includes(:user).order("created_at desc").limit(10)
+		@latest_posts = Post.select('title, id, photo, slug, price, created_at').order("created_at desc").limit(10)
 		@pages = Page.order("created_at desc").limit(10)
 		@featured = Page.select('title, id, picture, slug').where(feature: true).order("created_at desc").limit(10)
 	end

@@ -32,7 +32,12 @@
               = image_tag post.photo_url(:thumb), alt: post.title
             .caption
               %h3= link_to post.title.capitalize, post
-              %p= AutoExcerpt.new(post.description, {words: 35,strip_html: true})
+              %p
+                %label.label.label-danger Rs. #{post.price}
+                &nbsp;
+                %label.label.label-warning #{time_ago_in_words post.created_at} ago
+              %p
+                <a target="_blank" href="http://www.facebook.com/sharer.php?u=#{post.get_path}" class="btn btn-primary btn-sm"> <i class="icon-facebook-sign"></i> Share this deal to your friends</a>
     %h2 Who's New
 
     .row.pinned_cols
@@ -46,7 +51,7 @@
     %p= link_to "View All Pages", pages_path, class: "btn btn-primary"
   .col-lg-4.sidebar
     .social-feed
-      %a{href: "#",class: "btn btn-primary"}
+      %a{href: "https://www.facebook.com/hamrochitwansite",class: "btn btn-primary", target: "_blank"}
         %i.icon-facebook-sign
         Find us in Facebook
     %br
