@@ -36,4 +36,8 @@ $(function(){
       $(self).parent().find('img').remove().end().prepend('<img src="'+oFREvent.target.result+'" class="wid-mb" />');
     };
   });
+  $('.selectize').selectize({
+    create: true,
+    sortField: 'text'
+});
 });

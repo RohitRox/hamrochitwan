@@ -51,7 +51,7 @@
       <br>
       <div class="field">
         <%= f.label :business %><br />
-        <%= f.select :business_id, options_from_collection_for_select(@business, "id", "title") %>
+        <%= f.select :business_id, options_from_collection_for_select(@business, "id", "title"), { :include_blank=>false }, {class: "selectize", placeholder: "Select a related business..."} %>
       </div>
       <br>
       <div class="field">

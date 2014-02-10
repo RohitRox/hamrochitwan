@@ -38,4 +38,7 @@ Hamrochitwan::Application.configure do
   config.assets.debug = false
 
   config.assets.logger = false
+
+  config.action_controller.asset_host = "http://localhost:3000"
+
 end

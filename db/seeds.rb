@@ -22,7 +22,7 @@ businesses_dump =
 	"Agriculture",
 	"Auto And Parts",
 	{"Banks And Finance" => 
-		["Banks","Insurance"]},
+		["Banks","Insurance", "Coperatives"]},
 	{"Business And Professionals" => 
 		["Construction","Law Firm","Real Estate"]},
 	{"Communication, Media And Publishing" => 
@@ -36,13 +36,13 @@ businesses_dump =
 	{"Health And Medicine" =>
 		["Dental","Hospitals","Pharmaceuticals","Veterinary"]},
 	{"Hotels And Fooding" =>
-		["Bars","Cafe","Guest Houses","Hotels","Party Palaces","Restaurants"]},
+		["Bars","Cafe","Guest Houses","Hotels Restaurants","Party Palaces", "Hotels and Lodges"]},
 	"IT Solutions And Services",
 	{"Libraries And Communities" =>
 		["Churches","Libraries", "Social Clubs"]},
 	"Police",
 	{"Recreation And Sports" =>
-		["Arts And Galleries","Cinema","Gym And Fitness","Swimming Pools"]},
+		["Arts And Galleries","Cinema","Gym And Fitness","Swimming Pools", "Tour and Safari", "Gardens and Parks"]},
 	{"Services And Others" =>
 		["Beauty Parlour","Petrol Pumps","Plumbing","Salons"]},
 	{"Stores And Shops" =>
