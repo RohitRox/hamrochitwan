@@ -34,13 +34,14 @@
         <div class="field">
           <label>Add Tags</label>
           <%= f.hidden_field :tag_list %>
-          <br>
+          <small>Type your tag and hit enter, you can enter as many tags as relevant</small>
         </div>
       </div>
       <div class="col-md-3">
         <div class="field">
           <%= f.label :used_for %><br />
-          <%= f.text_field :used_for, placeholder: "In months" %>
+          <%= f.text_field :used_for %>
+          <small>Eg. 3 months, 1 year</small>
         </div>
         <br>
         <div class="field">

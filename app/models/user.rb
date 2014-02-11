@@ -17,4 +17,11 @@ class User < ActiveRecord::Base
     self.notifications.create(name: name, content: content)
   end
 
+  def self.notify_all(user_notifications)
+    noti = user_notifications.map do |un|
+      Notification.new(un)
+    end
+    Notification.import noti
+  end
+
 end
