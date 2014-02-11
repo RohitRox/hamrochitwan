@@ -376,3 +376,17 @@ h1, h2, .sidebar h3{
 	padding: 4px;
 	background: #ccc;
 }
+.map-wrapper{
+	position: relative;
+	#addresspicker_map{
+		position: absolute;
+		z-index: 1;
+		top: 56px;
+		left: 40px;
+		opacity: 0.9;
+		width: 210px;
+		&:focus{
+			opacity: 0.95;
+		}
+	}
+}

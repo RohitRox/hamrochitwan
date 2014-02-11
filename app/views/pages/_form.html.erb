@@ -61,12 +61,12 @@
       <div class="field">
         <%=f.hidden_field :map_info %>
         <%=f.hidden_field :map_address %>
-        <input id="addresspicker_map" type="hidden" />   <br/>
         <!--
         <label>Lat:      </label> <input id="lat" disabled=disabled> <br/>
         <label>Lng:      </label> <input id="lng" disabled=disabled> <br/> -->
         <div class='map-wrapper'>
           <div id="legend">You can use map below for specifiying location for contact. You can drag and drop the marker to the correct location</div>
+          <input id="addresspicker_map" placeholder="Type address here for suggestion"/>
           <div id="map"></div>
         </div>
         <div id="callback_result"></div>
