@@ -5,7 +5,7 @@
   = nested_form_for @page, html: {:multipart => true, id: "page_photos_form"} do |f|
     .clearfix
       = f.fields_for :attachments do |attachment_form|
-        - if image_tag attachment_form.object.file.present?
+        - if attachment_form.object.file.present?
           = image_tag attachment_form.object.file_url(:thumb), class: "rem-el"
         .dib
           %p
