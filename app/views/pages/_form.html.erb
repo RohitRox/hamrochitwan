@@ -60,11 +60,10 @@
         <%= f.text_area :contact_details, rows: 4 %>
       </div>
       <div class="field">
-        <%=f.hidden_field :map_info %>
         <%=f.hidden_field :map_address %>
-        <!--
-        <label>Lat:      </label> <input id="lat" disabled=disabled> <br/>
-        <label>Lng:      </label> <input id="lng" disabled=disabled> <br/> -->
+        <%=f.hidden_field :map_info %>
+        <input id="lat" disabled=disabled type="hidden" >
+        <input id="lng" disabled=disabled type="hidden" >
         <div class='map-wrapper'>
           <div id="legend">You can use map below for specifiying location for contact. You can drag and drop the marker to the correct location</div>
           <input id="addresspicker_map" placeholder="Type address here for suggestion" type="text"/>
@@ -119,7 +118,7 @@
   });
   $(function() {
     var addresspickerMap = $( "#addresspicker_map" ).addresspicker({
-      regionBias: "fr",
+      regionBias: null,
       updateCallback: showCallback,
       mapOptions: {
         zoom: 14,
@@ -129,8 +128,8 @@
       },
       elements: {
         map:      "#map",
-        //lat:      "#lat",
-        //lng:      "#lng"
+        lat:      "#lat",
+        lng:      "#lng"
       }
     });
 
@@ -141,7 +140,8 @@
     $("#addresspicker_map").addresspicker("option", "reverseGeocode", true);
 
     function showCallback(geocodeResult, parsedGeocodeResult){
-      $('#page_map_info').val("("+parsedGeocodeResult.lat+","+parsedGeocodeResult.lng+")");
+      // console.log(geocodeResult)
+      $('#page_map_info').val("("+$('#lat').val()+","+$('#lng').val()+")");
       $('#page_map_address').val(parsedGeocodeResult.route+parsedGeocodeResult.locality);
       // $('#callback_result').text(JSON.stringify(parsedGeocodeResult, null, 4));
     }
