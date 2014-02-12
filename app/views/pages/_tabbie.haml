@@ -57,7 +57,7 @@
           .col-sm-12.col-md-12
             = link_to @page.picture_url, title: @page.title, class: "pull-left" do
               = image_tag @page.picture_url(:thumb), class: "thumbnail"
-            %section
+            %section{style: "margin-left: 355px;"}
               = simple_format @page.description
       #page_gallery.tab-pane
         .row
