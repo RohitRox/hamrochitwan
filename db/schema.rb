@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140127185519) do
+ActiveRecord::Schema.define(:version => 20140221104504) do
 
   create_table "advertisements", :force => true do |t|
     t.string   "title"
@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(:version => 20140127185519) do
     t.text     "description"
     t.integer  "status",         :default => 0
     t.boolean  "home_delivery"
-    t.float    "used_for"
+    t.string   "used_for"
     t.string   "condition"
     t.datetime "expiry_date"
     t.string   "photo"
